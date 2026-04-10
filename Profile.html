@@ -1,211 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Profile</title>
+<title>Payment - SASA Shop</title>
 
 <style>
-  .back-btn {
-  text-decoration: none;
-  background: #333;
-  color: white;
-  padding: 8px 15px;
-  border-radius: 20px;
-  transition: 0.3s;
-}
-
-.back-btn:hover {
-  background: #000;
+  #total {
+  color: #ee4d2d;
+  font-weight: bold;
+  text-align: center;
 }
 body {
   margin: 0;
   font-family: Arial;
-  background: #111;
-  color: white;
-}
-
-/* HEADER */
-header {
-  background: #ee4d2d;
-  padding: 15px;
+  background: linear-gradient(135deg, #ee4d2d, #ff9800);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
-header input {
-  width: 40%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-}
-
-/* LAYOUT */
-.container {
-  display: flex;
-  padding: 20px;
-}
-
-/* LEFT MENU */
-.sidebar {
-  width: 250px;
-}
-
-.sidebar h3 {
-  margin-bottom: 10px;
-}
-
-.sidebar a {
-  display: block;
-  color: #ccc;
-  padding: 8px 0;
-  text-decoration: none;
-}
-
-.sidebar a:hover {
-  color: #ee4d2d;
-}
-
-/* MAIN PROFILE */
-.main {
-  flex: 1;
-  background: #1c1c1c;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* FORM */
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #aaa;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-}
-
-/* RIGHT IMAGE */
-.profile-img {
+/* BOX */
+.box {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  width: 350px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
   text-align: center;
 }
 
-.profile-img img {
-  width: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
+/* INPUT */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
 }
 
 /* BUTTON */
 button {
-  background: #ee4d2d;
+  width: 100%;
+  padding: 12px;
   border: none;
-  padding: 10px 20px;
+  border-radius: 30px;
+  background: linear-gradient(45deg, #000, #ff9800);
   color: white;
-  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-button:hover {
-  background: #d84315;
+/* QR BOX */
+.qr-box {
+  display: none;
+  margin-top: 15px;
 }
+
+.qr-box img {
+  width: 200px;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<header>
-  <h2>🛒 SASA Shop</h2>
-  <input placeholder="🔍 Search...">
-</header>
+<div class="box">
+  <h2>💳 Payment</h2>
 
-<div class="container">
+  <input type="text" placeholder="Card Number">
+  <input type="text" placeholder="Name on Card">
+  <input type="text" placeholder="MM/YY">
+  <input type="text" placeholder="CVV">
+<h3 id="total">Total: $0</h3> <h3>🧾 Your Items</h3>
+<ul id="itemList"></ul>
 
-  <!-- LEFT -->
-  <div class="sidebar">
-    <h3>👤 Username</h3>
-    <a href="#">📄 Profile</a>
-    <a href="#">🏦 Banks</a>
-    <a href="#">📍 Address</a>
-    <a href="#">🔒 Change Password</a>
-    <a href="#">🔔 Notifications</a>
-  </div>
+<p id="subtotal"></p>
+<p id="discount"></p>
+<p id="tax"></p>
 
-  <!-- MAIN -->
-  <div class="main">
+<button onclick="showQR()">Pay Now</button>
+ 
 
-    <h2>My Profile</h2>
-    <p style="color:#aaa;">Manage your account</p>
+  <!-- QR CODE -->
+  <div class="qr-box" id="qrBox">
+    <h3>📱 Scan to Pay</h3>
 
-    <div style="display:flex; gap:30px;">
+    <!-- 👉 អ្នកអាចប្ដូររូប QR -->
+    <img src="c:\Users\user\Pictures\Screenshots\Screenshot (112).png">
 
-      <!-- FORM -->
-      <div style="flex:1;">
-
-        <div class="form-group">
-          <label>Username</label>
-          <input value="user123">
-        </div>
-
-        <div class="form-group">
-          <label>Name</label>
-          <input placeholder="Your name">
-        </div>
-
-        <div class="form-group">
-          <label>Email</label>
-          <input placeholder="email@gmail.com">
-        </div>
-
-        <div class="form-group">
-          <label>Phone</label>
-          <input placeholder="012345678">
-        </div>
-
-        <div class="form-group">
-          <label>Gender</label>
-          <select>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Date of Birth</label>
-          <input type="date">
-        </div>
-
-        <button onclick="save()">💾 Save</button>
-
-      </div>
-
-      <!-- IMAGE -->
-      <div class="profile-img">
-        <img src="https://via.placeholder.com/100">
-        <p>Select Image</p>
-        <input type="file">
-      </div>
-
-    </div>
-
+    <button onclick="confirmPayment()">✅ I Paid</button>
   </div>
 
 </div>
 
 <script>
-function save() {
-  alert("Saved ✅");
+  
+function showQR() {
+  document.getElementById("qrBox").style.display = "block";
+}
+
+function confirmPayment() {
+  alert("🎉 Payment Successful!");
+  localStorage.removeItem("cart");
+  window.location.href = "shop.html";
+  
 }
 </script>
 
 </body>
 </html>
-<a href="shop.html" class="back-btn">🔙 Back</a>
