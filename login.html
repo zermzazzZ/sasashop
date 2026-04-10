@@ -1,12 +1,319 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Reaksa Shop</title>
+<title>Ksa Shop - Ultra Auth</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
+
+body{
+  display:flex;
+  height:100vh;
+}
+
+/* LEFT */
+.left{
+  flex:1;
+  background:#ee4d2d;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  color:white;
+}
+
+.left h1{
+  font-size:70px;
+}
+
+.left p{
+  margin-top:10px;
+  font-size:18px;
+}
+
+/* RIGHT */
+.right{
+  flex:1;
+  background:#111;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* CARD */
+.card{
+  width:360px;
+  background:#1c1c1c;
+  border-radius:10px;
+  padding:25px;
+  box-shadow:0 10px 50px rgba(0,0,0,0.6);
+  position:relative;
+}
+
+/* TAB */
+.tab{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.tab div{
+  cursor:pointer;
+  color:#aaa;
+}
+
+.tab .active{
+  color:#ff7337;
+  font-weight:bold;
+}
+
+/* QR BOX */
+.qr{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:#2b2b2b;
+  padding:8px 12px;
+  border-radius:5px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+/* INPUT */
+.input-group{
+  position:relative;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:5px;
+  border:1px solid #333;
+  background:#111;
+  color:white;
+}
+
+/* floating label */
+label{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#777;
+  font-size:13px;
+  pointer-events:none;
+  transition:0.3s;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label{
+  top:-5px;
+  font-size:11px;
+  color:#ff7337;
+}
+
+/* BUTTON */
+.main-btn{
+  width:100%;
+  padding:12px;
+  background:#ee4d2d;
+  border:none;
+  color:white;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+/* EXTRA */
+.extra{
+  font-size:12px;
+  color:#aaa;
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.social{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.social button{
+  flex:1;
+  padding:10px;
+  border:none;
+  cursor:pointer;
+}
+
+.fb{background:#1877f2;color:white;}
+.gg{background:white;color:black;}
+
+.switch{
+  text-align:center;
+  margin-top:15px;
+  font-size:13px;
+}
+
+.switch span{
+  color:#ee4d2d;
+  cursor:pointer;
+}
+
+/* ANIMATION */
+.fade{
+  animation:fade 0.4s;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateX(20px);}
+  to{opacity:1;}
+}
+</style>
 </head>
+
 <body>
 
+<div class="left">
+  <h1>🛍</h1>
+  <h1>Ksa Shop</h1>
+  <p>Platform like Shopee</p>
+</div>
+
+<div class="right">
+  <div class="card">
+
+    <div class="qr">Login with QR</div>
+
+    <!-- LOGIN -->
+    <div id="loginBox" class="fade">
+      <div class="tab">
+        <div class="active">Log In</div>
+        <div onclick="showSignup()">Sign Up</div>
+      </div>
+
+      <div class="input-group">
+        <input type="text" placeholder=" " id="loginUser">
+        <label>Phone / Email / Username</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" placeholder=" " id="loginPass">
+        <label>Password</label>
+      </div>
+
+      <button class="main-btn" onclick="login()">LOG IN</button>
+
+      <div class="extra">
+        <span>Forgot Password?</span>
+        <span></span>
+      </div>
+
+      <div class="social">
+        <button class="fb">Facebook</button>
+        <button class="gg">Google</button>
+      </div>
+
+      <div class="switch">
+        New to Ksa? <span onclick="showSignup()">Sign Up</span>
+      </div>
+    </div>
+
+    <!-- SIGNUP -->
+    <div id="signupBox" style="display:none;">
+      <div class="tab">
+        <div onclick="showLogin()">Log In</div>
+        <div class="active">Sign Up</div>
+      </div>
+
+      <div class="input-group">
+        <input type="text" placeholder=" " id="regUser">
+        <label>Username</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" placeholder=" " id="regPass">
+        <label>Password</label>
+      </div>
+
+      <button class="main-btn" onclick="signup()">SIGN UP</button>
+
+      <div class="social">
+        <button class="fb">Facebook</button>
+        <button class="gg">Google</button>
+      </div>
+
+      <div class="switch">
+        Have account? <span onclick="showLogin()">Log In</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script>
-  window.location.href = "login.html";
+// switch
+function showSignup(){
+  loginBox.style.display="none";
+  signupBox.style.display="block";
+}
+
+function showLogin(){
+  signupBox.style.display="none";
+  loginBox.style.display="block";
+}
+
+// storage
+function getUsers(){
+  return JSON.parse(localStorage.getItem("users")||"[]");
+}
+
+function saveUsers(u){
+  localStorage.setItem("users",JSON.stringify(u));
+}
+
+// signup
+function signup(){
+  let u=regUser.value.trim();
+  let p=regPass.value.trim();
+
+  if(!u||!p){
+    alert("Fill all");
+    return;
+  }
+
+  let users=getUsers();
+
+  if(users.find(x=>x.user===u)){
+    alert("User exists");
+    return;
+  }
+
+  users.push({user:u,pass:p});
+  saveUsers(users);
+
+  alert("Signup success");
+  showLogin();
+}
+
+// login
+function login(){
+  let u=loginUser.value.trim();
+  let p=loginPass.value.trim();
+
+  let users=getUsers();
+
+  let found=users.find(x=>x.user===u && x.pass===p);
+
+  if(found){
+    localStorage.setItem("session","true");
+    window.location.href="shop.html";
+  }else{
+    alert("Wrong login");
+  }
+}
 </script>
 
 </body>
